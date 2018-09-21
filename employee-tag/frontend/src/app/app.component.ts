@@ -1,19 +1,22 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileSaverService} from 'ngx-filesaver';
-import {BehaviorSubject} from 'rxjs';
-import {first} from 'rxjs/operators';
+import {BehaviorSubject, throwError} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {FlowExecutionStatus} from './smartflows/models/flowExecutionStatus';
 import {SmartflowsService} from './smartflows/smartflows.service';
 
 @Component({
-  selector: 'app-root',
+    selector: 'app-root',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './app.component.html', styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
     documentForm: FormGroup;
-    docId: string;
+    docusignUrl: string;
     busy$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    error$: BehaviorSubject<string> = new BehaviorSubject(null);
 
     constructor(private fb: FormBuilder, private smartflows: SmartflowsService, private fileSaver: FileSaverService) {
         this.documentForm = this.fb.group({
@@ -21,19 +24,37 @@ export class AppComponent {
             Title: [],
             Picture: [],
             Surname: [],
-            Email: []
+            Email: [],
+            Meta: {
+                RedirectUrl: [location.origin]
+            }
         });
     }
 
+    removeError() {
+        this.error$.next(null);
+    }
+
     onSubmit() {
+        this.removeError();
         if (this.documentForm.valid) {
             this.busy$.next(true);
-            this.smartflows.startFlow(this.documentForm.value).pipe(
+            this.smartflows.startFlow({request: this.documentForm.value}).pipe(
                 // switchMap((progress) => this.smartflows.getResult(progress.id))
-            ).subscribe(result => {
+                switchMap(result => {
+                    if (result.status === FlowExecutionStatus.Error) {
+                        return throwError(result.message);
+                    }
+                    return this.smartflows.getFlowExecutionOutput(result.id, 'output');
+                }),
+                map(execution => execution.outputs[0])
+            ).subscribe(output => {
                 this.busy$.next(false);
-                this.docId = result.state.output.model.B2b4eb394_5e5f_4ef5_929d_b2270eb5643c.document.id;
-            }, () => this.busy$.next(false));
+                this.docusignUrl = output.content['EmbedUrl'];
+            }, (error) => {
+                this.error$.next(error);
+                this.busy$.next(false);
+            });
         }
     }
 
@@ -41,9 +62,7 @@ export class AppComponent {
         this.documentForm.get('Picture').setValue(image);
     }
 
-    downloadDoc() {
-        this.smartflows.getDocumentContent(this.docId).pipe(first()).subscribe((res) =>
-            this.fileSaver.save(res, 'card.pdf')
-        );
+    signDoc() {
+        window.location.href = this.docusignUrl;
     }
 }

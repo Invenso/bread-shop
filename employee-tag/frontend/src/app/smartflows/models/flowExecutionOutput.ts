@@ -12,8 +12,7 @@
 import { IdWithName } from './idWithName';
 
 
-export interface GeneratedDocumentContent {
-    entity?: IdWithName;
-    link?: string;
-    data?: string;
+export interface FlowExecutionOutput {
+    output?: IdWithName;
+    content?: any;
 }

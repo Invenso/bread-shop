@@ -9,11 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { IdWithName } from './idWithName';
+import { LanguageReference } from './languageReference';
 
 
-export interface GeneratedDocumentContent {
-    entity?: IdWithName;
-    link?: string;
-    data?: string;
+export interface PublicSettings {
+    systemLanguage?: LanguageReference;
 }

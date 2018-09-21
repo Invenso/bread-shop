@@ -2,7 +2,9 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {interval, Observable} from 'rxjs';
 import {filter, first, flatMap, share} from 'rxjs/operators';
+import {FlowExecution} from './models/flowExecution';
 import {FlowExecutionProgress} from './models/flowExecutionProgress';
+import {FlowExecutionStateOutputParts} from './models/flowExecutionStateOutputParts';
 import {FlowExecutionStatus} from './models/flowExecutionStatus';
 
 const json2xml = require('json2xml');
@@ -24,15 +26,19 @@ export class SmartflowsService {
             flatMap(progress =>
                 interval(1000).pipe(
                     flatMap(() => this.pollStatus(progress.id)),
-                    filter(pg => pg.status === FlowExecutionStatus.Success),
+                    filter(pg => pg.status === FlowExecutionStatus.Success || pg.status === FlowExecutionStatus.Error),
                     first(),
                     share())
             )
         );
     }
 
+    getFlowExecutionOutput(executionId: string, outputName: string): Observable<FlowExecution> {
+        return this.http.get(this.apiUrl + '/flows/executions/' + executionId + '/status?output=' + outputName).pipe(share());
+    }
+
     pollStatus(executionId: string): Observable<FlowExecutionProgress> {
-        return this.http.get<FlowExecutionProgress>(this.apiUrl + '/flows/executions/' + executionId).pipe(share());
+        return this.http.get<FlowExecutionProgress>(this.apiUrl + '/flows/executions/' + executionId + '/progress').pipe(share());
     }
 
     getResult(executionId: string): Observable<any> {
