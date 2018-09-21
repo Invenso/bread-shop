@@ -8,8 +8,8 @@ import {WebcamModule} from 'ngx-webcam';
 
 import {AppComponent} from './app.component';
 import {CameraComponent} from './camera/camera.component';
+import {NavComponent} from './nav/nav.component';
 import {ApiInterceptor} from './service/api.interceptor';
-import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +24,10 @@ import { NavComponent } from './nav/nav.component';
       FormsModule,
       ReactiveFormsModule,
       WebcamModule,
-      NgbModule.forRoot()
+      NgbModule
   ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
-
+        {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}
     ],
   bootstrap: [AppComponent]
 })
