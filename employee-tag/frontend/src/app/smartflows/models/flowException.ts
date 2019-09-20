@@ -9,11 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {ArchivableItem} from './archivableItem';
-import {Archive} from './archive';
 
 
-export interface FlatArchive {
-	archive?: Archive;
-	items?: Array<ArchivableItem>;
+export interface FlowException {
+	error?: string;
+	message?: string;
+	causes?: Array<string>;
+	stackTrace?: string;
 }

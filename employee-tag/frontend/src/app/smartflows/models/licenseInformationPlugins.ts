@@ -11,6 +11,7 @@
  */
 
 
-export interface CustomContentFieldTime {
-	default?: string;
+export interface LicenseInformationPlugins {
+	id?: string;
+	displayName?: string;
 }

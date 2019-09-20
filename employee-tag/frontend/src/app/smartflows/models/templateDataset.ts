@@ -14,16 +14,15 @@
 export interface TemplateDataset {
 	id?: string;
 	displayName?: string;
-	type?: TemplateDataset.TypeEnum;
+	type?: TemplateDatasets.TypeEnum;
 	primaryEntities?: Array<string>;
 }
-
-export namespace TemplateDataset {
+export namespace TemplateDatasets {
 	export type TypeEnum = 'standard' | 'custom' | 'schema' | 'extended';
 	export const TypeEnum = {
 		Standard: 'standard' as TypeEnum,
 		Custom: 'custom' as TypeEnum,
 		Schema: 'schema' as TypeEnum,
 		Extended: 'extended' as TypeEnum
-	}
+	};
 }

@@ -9,11 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {SchemaContent} from './schemaContent';
+import {IdWithName} from './idWithName';
 
 
-export interface DocGenSettingsTemplateStandard {
-	content?: string;
-	datasets?: Array<string>;
-	schemas?: Array<SchemaContent>;
+export interface TemplatePortalContentTemplates {
+	language?: string;
+	library?: IdWithName;
+	group?: IdWithName;
+	template?: IdWithName;
 }
