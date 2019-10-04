@@ -12,6 +12,6 @@
 
 
 export interface LanguageReference {
-    code?: string;
-    displayName?: string;
+	code?: string;
+	displayName?: string;
 }

@@ -6,7 +6,7 @@ import {Observable, Subject} from 'rxjs';
     selector: 'app-camera',
     template: `
         <div class="position-relative">
-            <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            <webcam [height]="800" [width]="600" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
                     [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
                     [videoOptions]="videoOptions" (click)="triggerSnapshot();"
                     (cameraSwitched)="cameraWasSwitched($event)"
