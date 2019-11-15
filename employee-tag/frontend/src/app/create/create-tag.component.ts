@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {filter, first, map, shareReplay, switchMap, take} from 'rxjs/operators';
-import {Flow, FlowExecutionStatus} from '../smartflows/models';
+import {Flow, FlowExecutionProgress, FlowExecutionStatus} from '../smartflows/models';
 import {SmartflowsService} from '../smartflows/smartflows.service';
 import * as Flatten from 'flat';
 
@@ -59,10 +59,10 @@ export class CreateTagComponent {
         this.form = this.fb.group({
             document: this.fb.group({
                 Name: [null, Validators.required],
-                Title: [],
-                Picture: [],
-                Surname: [],
-                Email: [],
+                Title: [null, Validators.required],
+                Picture: [null, Validators.required],
+                Surname: [null, Validators.required],
+                Email: [null, Validators.required],
                 IncludeSignature: [],
                 Meta: {
                     RedirectUrl: [location.origin]
@@ -98,11 +98,11 @@ export class CreateTagComponent {
         this.removeError();
         if (this.documentsForm.valid) {
             this.busy$.next(true);
-            const poller = this.smartflows.startFlow(this.settingsForm.value.flowId, this.documentsForm.value).pipe(
+            const poller: Observable<FlowExecutionProgress> = this.smartflows.startFlow(this.settingsForm.value.flowId, this.documentsForm.value).pipe(
                 // switchMap((progress) => this.smartflows.getResult(progress.id))
                 map(result => {
                     if (result.status === FlowExecutionStatus.Error || result.status === FlowExecutionStatus.Warning) {
-                        return throwError(result.message);
+                        throw new Error(result.message);
                     }
                     return result;
                 }),
