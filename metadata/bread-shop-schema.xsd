@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML Studio 1.0.8.0 (http://www.liquid-technologies.com) -->
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Customer" type="CustomerType" />
+  <xs:element name="Order" type="OrderType" />
+  <xs:element name="Product" type="ProductType" />
+  <xs:element name="OrderItem" type="OrderItemType" />
+  <xs:complexType name="CustomerType">
+    <xs:all>
+      <xs:element minOccurs="0" name="Id" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" type="xs:string" />
+      <xs:element minOccurs="0" name="Company" type="xs:string" />
+      <xs:element minOccurs="0" name="Address" type="xs:string" />
+      <xs:element minOccurs="0" name="Phone" type="xs:string" />
+      <xs:element minOccurs="0" name="Orders">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" type="OrderType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="OrderType">
+    <xs:all>
+      <xs:element minOccurs="0" name="Id" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedAt" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliveryDate" type="xs:string" />
+      <xs:element minOccurs="0" name="Items">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Item" type="OrderItemType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="OrderItemType">
+    <xs:all>
+      <xs:element minOccurs="0" name="Id" type="xs:string" />
+      <xs:element minOccurs="0" name="Product" type="ProductType" />
+      <xs:element minOccurs="0" name="Amount" type="xs:double" />
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="ProductType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:double" />
+      <xs:element minOccurs="0" name="Unit">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Piece" />
+            <xs:enumeration value="Liter" />
+            <xs:enumeration value="Kilogram" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
