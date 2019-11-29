@@ -14,12 +14,12 @@ import {IdWithName} from './idWithName';
 
 
 export interface FlowExecutionProgress {
-	id?: string;
-	percentage?: number;
-	currentData?: IdWithName;
-	message?: string;
-	status?: FlowExecutionStatus;
-	schema?: any;
-	model?: any;
-	form?: Array<any>;
+    id?: string;
+    percentage?: number;
+    currentData?: IdWithName;
+    message?: string;
+    status?: FlowExecutionStatus;
+    schema?: any;
+    model?: any;
+    form?: Array<any>;
 }

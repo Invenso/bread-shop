@@ -5,7 +5,7 @@ import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest} from '@angular/com
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
-    private readonly token: string = '/SxqPlQlQ5K0sciTwWIrtg+Sh1GOIQQpx0ahBf5NZYE=';
+    private readonly token: string = 'IKnV2QZvTaypIDrS3ejVh67pd/wnUp6YJAchDM3WiN4=';
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
