@@ -1,0 +1,54 @@
+﻿@page "/products/create"
+@using Breadshop.Shared
+@using Breadshop.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h3>Inventory</h3>
+<div class="row">
+    <div class="col">
+        <h4>Add a new product</h4>
+        <form>
+            <div class="form-group">
+                <label for="productName">Name</label>
+                <input @bind=@product.Name type="text" class="form-control" id="productName" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Description</label>
+                <input @bind=@product.Description type="text" class="form-control" id="productDescription"  placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Price</label>
+                <input @bind=@product.Price type="number" step="0.01" class="form-control" id="productPrice" >
+            </div>
+            <div class="form-group">
+                <label for="productUnit">Unit</label>
+                <input @bind=@product.Unit type="text" class="form-control" id="productUnit" placeholder="unit">
+            </div>
+            <button type="button" class="btn btn-primary" @onclick=@Create>Create</button>
+        </form>
+    </div>
+</div>
+
+
+@code {
+
+    private Product product = new Product();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    protected async Task Create()
+    {
+        await Http.PostJsonAsync("api/products/create", product);
+        NavigationManager.NavigateTo("products");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("products");
+    }
+
+}

@@ -1,0 +1,8 @@
+D:\demo\bread-shop\blazor\Breadshop\Shared\bin\Debug\netstandard2.1\Breadshop.Shared.deps.json
+D:\demo\bread-shop\blazor\Breadshop\Shared\bin\Debug\netstandard2.1\Breadshop.Shared.dll
+D:\demo\bread-shop\blazor\Breadshop\Shared\bin\Debug\netstandard2.1\Breadshop.Shared.pdb
+D:\demo\bread-shop\blazor\Breadshop\Shared\obj\Debug\netstandard2.1\Breadshop.Shared.AssemblyInfoInputs.cache
+D:\demo\bread-shop\blazor\Breadshop\Shared\obj\Debug\netstandard2.1\Breadshop.Shared.AssemblyInfo.cs
+D:\demo\bread-shop\blazor\Breadshop\Shared\obj\Debug\netstandard2.1\Breadshop.Shared.dll
+D:\demo\bread-shop\blazor\Breadshop\Shared\obj\Debug\netstandard2.1\Breadshop.Shared.pdb
+D:\demo\bread-shop\blazor\Breadshop\Shared\obj\Debug\netstandard2.1\Breadshop.Shared.csprojAssemblyReference.cache

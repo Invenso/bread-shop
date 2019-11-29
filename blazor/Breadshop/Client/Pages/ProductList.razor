@@ -1,0 +1,55 @@
+﻿@page "/products"
+@using Breadshop.Shared
+@using Breadshop.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h3>Inventory</h3>
+<div class="row">
+    <div class="col">
+        @if (Products == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Products)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-primary" @onclick="@Create">Add a product</button>
+        }
+    </div>
+
+</div>
+
+
+@code {
+
+    private Product[] _products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await Http.GetJsonAsync<Product[]>("api/Products");
+    }
+
+    protected void Create()
+    {
+        NavigationManager.NavigateTo("products/create");
+    }
+
+    public Product[] Products => _products;
+}
